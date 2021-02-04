@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:alert/alert.dart';
+import 'package:firstchoice/UI/userDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' show utf8;
@@ -58,6 +59,10 @@ class _LoginState extends State<Login> {
        if(isLoginSucess ==  true )
          {
            Alert(message: "Success").show();
+           Navigator.pushReplacement(
+             context,
+             MaterialPageRoute(builder: (context) => UserDetails()),
+           );
          }
        else
          {
