@@ -55,6 +55,14 @@ class _LoginState extends State<Login> {
        var  data = jsonDecode(response.body);
        token = data['access_token'];
        isLoginSucess = data['isAuthorized'];
+       if(isLoginSucess ==  true )
+         {
+           Alert(message: "Success").show();
+         }
+       else
+         {
+           Alert(message: "Faild").show();
+         }
 
     } else {
       // If the server did not return a 201 CREATED response,
@@ -117,13 +125,7 @@ class _LoginState extends State<Login> {
                     phoneNo=Mobile.text;
                     otpNo=Otp.text;
                 });
-                if(isLoginSucess == true)
-                {
-                  Alert(message: "Success").show();
-                }
-              else {
-                Alert(message: "Failed").show();
-              }
+
                 getdata();
               },
 
