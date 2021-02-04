@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:alert/alert.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:firstchoice/UI/userDetails.dart';
+import 'package:firstchoice/repository/senddata.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' show utf8;
@@ -54,11 +56,16 @@ class _LoginState extends State<Login> {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
        var  data = jsonDecode(response.body);
-       token = data['access_token'];
+
        isLoginSucess = data['isAuthorized'];
        if(isLoginSucess ==  true )
          {
-           Alert(message: "Success").show();
+           accessToken = data['access_token'];
+           CoolAlert.show(
+             context: context,
+             type: CoolAlertType.success,
+             text: "Your transaction was successful!",
+           );
            Navigator.pushReplacement(
              context,
              MaterialPageRoute(builder: (context) => UserDetails()),
