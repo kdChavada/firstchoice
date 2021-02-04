@@ -12,19 +12,16 @@ class Login extends StatefulWidget {
 }
 
 
-
-
-
 class _LoginState extends State<Login> {
 
-      TextEditingController Mobile;
-        TextEditingController Otp;
+   final Mobile  = TextEditingController();
+  final Otp = TextEditingController();
 
-
+    String phoneNo;
+    String otpNo;
   @override
   void initState() {
-    Mobile  = TextEditingController();
-    Otp = TextEditingController();
+
     super.initState();
   }
 
@@ -37,7 +34,7 @@ class _LoginState extends State<Login> {
 
 
   var token;
-  bool isAuthorized;
+  bool isLoginSucess;
 
   void getdata() async {
 
@@ -48,8 +45,8 @@ class _LoginState extends State<Login> {
 
     },
     body: jsonEncode(<String , dynamic>{
-      'phone_no' : Mobile,
-      'login_otp' : Otp
+      'phone_no' : phoneNo,
+      'login_otp' : otpNo,
     })
     );
     if (response.statusCode == 200) {
@@ -57,7 +54,7 @@ class _LoginState extends State<Login> {
       // then parse the JSON.
        var  data = jsonDecode(response.body);
        token = data['access_token'];
-       isAuthorized = data['isAuthorized'];
+       isLoginSucess = data['isAuthorized'];
 
     } else {
       // If the server did not return a 201 CREATED response,
@@ -116,22 +113,18 @@ class _LoginState extends State<Login> {
             GestureDetector(
 
               onTap: (){
-
-                print(Mobile);
-                print(Otp);
-              if(isAuthorized == true)
+                setState(() {
+                    phoneNo=Mobile.text;
+                    otpNo=Otp.text;
+                });
+                if(isLoginSucess == true)
                 {
                   Alert(message: "Success").show();
                 }
               else {
-
-                Alert(message: "Success").show();
+                Alert(message: "Failed").show();
               }
-
-
-
                 getdata();
-
               },
 
 
