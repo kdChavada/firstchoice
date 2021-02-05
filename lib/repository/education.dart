@@ -1,6 +1,63 @@
-import 'package:flutter/cupertino.dart';
+class Education {
+  int id;
+  int userId;
+  String schoolName;
+  int schoolPassingYear;
+  String collegeName;
+  int collegePassingYear;
+  String collegeLocation;
+  String qualification;
+  String createdAt;
+  String updatedAt;
+  User user;
 
-class UserList {
+  Education(
+      {this.id,
+        this.userId,
+        this.schoolName,
+        this.schoolPassingYear,
+        this.collegeName,
+        this.collegePassingYear,
+        this.collegeLocation,
+        this.qualification,
+        this.createdAt,
+        this.updatedAt,
+        this.user});
+
+  Education.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userId = json['user_id'];
+    schoolName = json['school_name'];
+    schoolPassingYear = json['school_passing_year'];
+    collegeName = json['college_name'];
+    collegePassingYear = json['college_passing_year'];
+    collegeLocation = json['college_location'];
+    qualification = json['qualification'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['user_id'] = this.userId;
+    data['school_name'] = this.schoolName;
+    data['school_passing_year'] = this.schoolPassingYear;
+    data['college_name'] = this.collegeName;
+    data['college_passing_year'] = this.collegePassingYear;
+    data['college_location'] = this.collegeLocation;
+    data['qualification'] = this.qualification;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    if (this.user != null) {
+      data['user'] = this.user.toJson();
+    }
+    return data;
+  }
+}
+
+class User {
   int id;
   String name;
   String phoneNo;
@@ -19,11 +76,9 @@ class UserList {
   String interest;
   String createdAt;
   String updatedAt;
-  Education education;
   Family family;
-  List<Image> image;
 
-  UserList(
+  User(
       {this.id,
         this.name,
         this.phoneNo,
@@ -42,11 +97,9 @@ class UserList {
         this.interest,
         this.createdAt,
         this.updatedAt,
-        this.education,
-        this.family,
-        this.image});
+        this.family});
 
-  UserList.fromJson(Map<String, dynamic> json) {
+  User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     phoneNo = json['phone_no'];
@@ -65,17 +118,8 @@ class UserList {
     interest = json['interest'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    education = json['education'] != null
-        ? new Education.fromJson(json['education'])
-        : null;
     family =
     json['family'] != null ? new Family.fromJson(json['family']) : null;
-    if (json['image'] != null) {
-      image = new List<Image>();
-      json['image'].forEach((v) {
-        image.add(new Image.fromJson(v));
-      });
-    }
   }
 
   Map<String, dynamic> toJson() {
@@ -98,68 +142,9 @@ class UserList {
     data['interest'] = this.interest;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    if (this.education != null) {
-      data['education'] = this.education.toJson();
-    }
     if (this.family != null) {
       data['family'] = this.family.toJson();
     }
-    if (this.image != null) {
-      data['image'] = this.image.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Education {
-  int id;
-  int userId;
-  String schoolName;
-  int schoolPassingYear;
-  String collegeName;
-  int collegePassingYear;
-  String collegeLocation;
-  String qualification;
-  String createdAt;
-  String updatedAt;
-
-  Education(
-      {this.id,
-        this.userId,
-        this.schoolName,
-        this.schoolPassingYear,
-        this.collegeName,
-        this.collegePassingYear,
-        this.collegeLocation,
-        this.qualification,
-        this.createdAt,
-        this.updatedAt});
-
-  Education.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userId = json['user_id'];
-    schoolName = json['school_name'];
-    schoolPassingYear = json['school_passing_year'];
-    collegeName = json['college_name'];
-    collegePassingYear = json['college_passing_year'];
-    collegeLocation = json['college_location'];
-    qualification = json['qualification'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['school_name'] = this.schoolName;
-    data['school_passing_year'] = this.schoolPassingYear;
-    data['college_name'] = this.collegeName;
-    data['college_passing_year'] = this.collegePassingYear;
-    data['college_location'] = this.collegeLocation;
-    data['qualification'] = this.qualification;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
     return data;
   }
 }
@@ -220,33 +205,3 @@ class Family {
     return data;
   }
 }
-
-class Image {
-  int id;
-  int userId;
-  String image;
-  String createdAt;
-  String updatedAt;
-
-  Image({this.id, this.userId, this.image, this.createdAt, this.updatedAt});
-
-  Image.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userId = json['user_id'];
-    image = json['image'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['image'] = this.image;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
-}
-
-

@@ -1,6 +1,67 @@
-import 'package:flutter/cupertino.dart';
+class Family {
+  int id;
+  int userId;
+  String religion;
+  String belongsTo;
+  String motherName;
+  String motherOccupation;
+  String fatherName;
+  String fatherOccupation;
+  String aboutFamily;
+  String createdAt;
+  String updatedAt;
+  User user;
 
-class UserList {
+  Family(
+      {this.id,
+        this.userId,
+        this.religion,
+        this.belongsTo,
+        this.motherName,
+        this.motherOccupation,
+        this.fatherName,
+        this.fatherOccupation,
+        this.aboutFamily,
+        this.createdAt,
+        this.updatedAt,
+        this.user});
+
+  Family.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userId = json['user_id'];
+    religion = json['religion'];
+    belongsTo = json['belongs_to'];
+    motherName = json['mother_name'];
+    motherOccupation = json['mother_occupation'];
+    fatherName = json['father_name'];
+    fatherOccupation = json['father_occupation'];
+    aboutFamily = json['about_family'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['user_id'] = this.userId;
+    data['religion'] = this.religion;
+    data['belongs_to'] = this.belongsTo;
+    data['mother_name'] = this.motherName;
+    data['mother_occupation'] = this.motherOccupation;
+    data['father_name'] = this.fatherName;
+    data['father_occupation'] = this.fatherOccupation;
+    data['about_family'] = this.aboutFamily;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    if (this.user != null) {
+      data['user'] = this.user.toJson();
+    }
+    return data;
+  }
+}
+
+class User {
   int id;
   String name;
   String phoneNo;
@@ -20,10 +81,8 @@ class UserList {
   String createdAt;
   String updatedAt;
   Education education;
-  Family family;
-  List<Image> image;
 
-  UserList(
+  User(
       {this.id,
         this.name,
         this.phoneNo,
@@ -42,11 +101,9 @@ class UserList {
         this.interest,
         this.createdAt,
         this.updatedAt,
-        this.education,
-        this.family,
-        this.image});
+        this.education});
 
-  UserList.fromJson(Map<String, dynamic> json) {
+  User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     phoneNo = json['phone_no'];
@@ -68,14 +125,6 @@ class UserList {
     education = json['education'] != null
         ? new Education.fromJson(json['education'])
         : null;
-    family =
-    json['family'] != null ? new Family.fromJson(json['family']) : null;
-    if (json['image'] != null) {
-      image = new List<Image>();
-      json['image'].forEach((v) {
-        image.add(new Image.fromJson(v));
-      });
-    }
   }
 
   Map<String, dynamic> toJson() {
@@ -100,12 +149,6 @@ class UserList {
     data['updated_at'] = this.updatedAt;
     if (this.education != null) {
       data['education'] = this.education.toJson();
-    }
-    if (this.family != null) {
-      data['family'] = this.family.toJson();
-    }
-    if (this.image != null) {
-      data['image'] = this.image.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -163,90 +206,3 @@ class Education {
     return data;
   }
 }
-
-class Family {
-  int id;
-  int userId;
-  String religion;
-  String belongsTo;
-  String motherName;
-  String motherOccupation;
-  String fatherName;
-  String fatherOccupation;
-  String aboutFamily;
-  String createdAt;
-  String updatedAt;
-
-  Family(
-      {this.id,
-        this.userId,
-        this.religion,
-        this.belongsTo,
-        this.motherName,
-        this.motherOccupation,
-        this.fatherName,
-        this.fatherOccupation,
-        this.aboutFamily,
-        this.createdAt,
-        this.updatedAt});
-
-  Family.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userId = json['user_id'];
-    religion = json['religion'];
-    belongsTo = json['belongs_to'];
-    motherName = json['mother_name'];
-    motherOccupation = json['mother_occupation'];
-    fatherName = json['father_name'];
-    fatherOccupation = json['father_occupation'];
-    aboutFamily = json['about_family'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['religion'] = this.religion;
-    data['belongs_to'] = this.belongsTo;
-    data['mother_name'] = this.motherName;
-    data['mother_occupation'] = this.motherOccupation;
-    data['father_name'] = this.fatherName;
-    data['father_occupation'] = this.fatherOccupation;
-    data['about_family'] = this.aboutFamily;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
-}
-
-class Image {
-  int id;
-  int userId;
-  String image;
-  String createdAt;
-  String updatedAt;
-
-  Image({this.id, this.userId, this.image, this.createdAt, this.updatedAt});
-
-  Image.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userId = json['user_id'];
-    image = json['image'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['image'] = this.image;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
-}
-
-
