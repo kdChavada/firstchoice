@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:firstchoice/repository/senddata.dart';
 import 'package:firstchoice/repository/userlist.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,7 +27,7 @@ class _UserDetailsState extends State<UserDetails> {
       var data = jsonDecode(response.body);
       datalength = data['user'].length;
       print(data['user']);
-      return UserList.formJson(data['user'][1]);
+      return UserList.formJson(data['user'][0]);
     } else {
       throw Exception('Failed to load data');
     }
@@ -57,73 +56,73 @@ class _UserDetailsState extends State<UserDetails> {
           return Container(
             child: Center(
                 child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Card(
-                //   child: Container(
-                //     child: Text(datalength.toString()),
-                //     padding: EdgeInsets.all(20.0),
-                //   ),
-                // ),
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Card(
+                    //   child: Container(
+                    //     child: Text(datalength.toString()),
+                    //     padding: EdgeInsets.all(20.0),
+                    //   ),
+                    // ),
 
-                Card(
-                  child: Container(
-                    child: FutureBuilder<UserList>(
-                      future: futureData,
-                      builder: (context, val) {
-                        if (val.hasData) {
-                          return Container(
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  Text("Name"),
-                                  Text("${val.data.name}"),
-                                  Text("Phone No"),
-                                  Text(" ${val.data.phoneNo}"),
-                                  Text("Email"),
-                                  Text(" ${val.data.email}"),
-                                  Text("Adress"),
-                                  Text(" ${val.data.address}"),
-                                  Text("Gender"),
-                                  Text(" ${val.data.gender}"),
-                                  Text("Country"),
-                                  Text(" ${val.data.country}"),
-                                  Text("Height"),
-                                  Text(" ${val.data.height}"),
-                                  Text("BirthPlace"),
-                                  Text("${val.data.birth_place}"),
-                                  Text("Birthdate"),
-                                  Text("${val.data.birth_date}"),
-                                  Text("BirthTime"),
-                                  Text("${val.data.birth_time}"),
-                                  Text("livedin"),
-                                  Text("${val.data.lived_in}"),
-                                  Text("about User"),
-                                  Text("${val.data.about_user}"),
-                                  Text("material status"),
-                                  Text("${val.data.material_status}"),
-                                  Text("occuption"),
-                                  Text("${val.data.occupation}"),
-                                  Text("interest"),
-                                  Text("${val.data.interest}"),
-                                  Text("created at"),
-                                  Text("${val.data.created_at}"),
-                                  Text("updated at"),
-                                  Text("${val.data.updated_at}"),
-                                ],
-                              ),
-                            ),
-                          );
-                        } else if (val.hasError) {
-                          return Text("${val.error}");
-                        }
-                        return CircularProgressIndicator();
-                      },
+                    Card(
+                      child: Container(
+                        child: FutureBuilder<UserList>(
+                          future: futureData,
+                          builder: (context, val) {
+                            if (val.hasData) {
+                              return Container(
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      Text("Name"),
+                                      Text("${val.data.name}"),
+                                      Text("Phone No"),
+                                      Text(" ${val.data.phoneNo}"),
+                                      Text("Email"),
+                                      Text(" ${val.data.email}"),
+                                      Text("Adress"),
+                                      Text(" ${val.data.address}"),
+                                      Text("Gender"),
+                                      Text(" ${val.data.gender}"),
+                                      Text("Country"),
+                                      Text(" ${val.data.country}"),
+                                      Text("Height"),
+                                      Text(" ${val.data.height}"),
+                                      Text("BirthPlace"),
+                                      Text("${val.data.birth_place}"),
+                                      Text("Birthdate"),
+                                      Text("${val.data.birth_date}"),
+                                      Text("BirthTime"),
+                                      Text("${val.data.birth_time}"),
+                                      Text("livedin"),
+                                      Text("${val.data.lived_in}"),
+                                      Text("about User"),
+                                      Text("${val.data.about_user}"),
+                                      Text("material status"),
+                                      Text("${val.data.material_status}"),
+                                      Text("occuption"),
+                                      Text("${val.data.occupation}"),
+                                      Text("interest"),
+                                      Text("${val.data.interest}"),
+                                      Text("created at"),
+                                      Text("${val.data.created_at}"),
+                                      Text("updated at"),
+                                      Text("${val.data.updated_at}"),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            } else if (val.hasError) {
+                              return Text("${val.error}");
+                            }
+                            return CircularProgressIndicator();
+                          },
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ],
-            )),
+                  ],
+                )),
           );
         },
       ),

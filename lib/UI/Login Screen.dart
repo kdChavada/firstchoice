@@ -22,11 +22,7 @@ class _LoginState extends State<Login> {
 
     String phoneNo;
     String otpNo;
-  @override
-  void initState() {
 
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -121,7 +117,6 @@ class _LoginState extends State<Login> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
               child: TextField(
-
                 controller: Otp,
                 decoration: InputDecoration(
                   hintText: "Enter Otp Number",
@@ -162,7 +157,4 @@ class _LoginState extends State<Login> {
       ),
     );
   }
-
-
-
 }
