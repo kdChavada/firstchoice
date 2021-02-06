@@ -1,12 +1,9 @@
-import 'dart:convert';
 import 'package:alert/alert.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:firstchoice/UI/userDetails.dart';
-import 'package:firstchoice/repository/senddata.dart';
+import 'package:firstchoice/apiCall/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert' show utf8;
-import 'package:alert/alert.dart';
+
 
 
 class Login extends StatefulWidget {
@@ -17,12 +14,9 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
 
-   final Mobile  = TextEditingController();
+  final Mobile  = TextEditingController();
   final Otp = TextEditingController();
-
-    String phoneNo;
-    String otpNo;
-
+  Auth auth = Auth();
 
   @override
   void dispose() {
@@ -32,54 +26,6 @@ class _LoginState extends State<Login> {
   }
 
 
-  var token;
-  bool isLoginSucess;
-
-  void getdata() async {
-
-     http.Response response = await http.post("http://firstchoice.9brainz.store/api/v1/login", headers: <String , String> {
-
-       'Content-Type': 'application/json; charset=UTF-8',
-       'HeaderKey' : '1Diz0VVcRD5EC7T6FvRgcbsqHng='
-
-    },
-    body: jsonEncode(<String , dynamic>{
-      'phone_no' : phoneNo,
-      'login_otp' : otpNo,
-    })
-    );
-    if (response.statusCode == 200) {
-      // If the server did return a 201 CREATED response,
-      // then parse the JSON.
-       var  data = jsonDecode(response.body);
-
-       isLoginSucess = data['isAuthorized'];
-       if(isLoginSucess ==  true )
-         {
-           accessToken = data['access_token'];
-           CoolAlert.show(
-             context: context,
-             type: CoolAlertType.success,
-             text: "Your transaction was successful!",
-           );
-           Navigator.pushReplacement(
-             context,
-             MaterialPageRoute(builder: (context) => UserDetails()),
-           );
-         }
-       else
-         {
-           Alert(message: "Faild").show();
-         }
-
-    } else {
-      // If the server did not return a 201 CREATED response,
-      // then throw an exception.
-      throw Exception('Failed to load album');
-    }
-
-
-  }
 
 
   @override
@@ -127,15 +73,23 @@ class _LoginState extends State<Login> {
             ),
             GestureDetector(
 
-              onTap: (){
-                setState(() {
-                    phoneNo=Mobile.text;
-                    otpNo=Otp.text;
-                });
-
-                getdata();
+              onTap: () async{
+                bool isauthorised = await auth.login(Mobile.text, Otp.text);
+                if(isauthorised){
+                  CoolAlert.show(
+                    context: context,
+                    type: CoolAlertType.success,
+                    text: "Your transaction was successful!",
+                  );
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => UserDetails()),
+                  );
+                }
+                else{
+                  Alert(message: "Faild").show();
+                }
               },
-
 
               child: Container(
                 height: h * 0.1,

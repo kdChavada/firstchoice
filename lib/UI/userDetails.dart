@@ -26,7 +26,7 @@ class _UserDetailsState extends State<UserDetails> {
       "http://firstchoice.9brainz.store/api/v1/users",
       headers: {
         HttpHeaders.contentTypeHeader: "application/json",
-        HttpHeaders.authorizationHeader: "Bearer $accessToken"
+        HttpHeaders.authorizationHeader: "Bearer ${accessToken.value}"
       },
     );
     if (response.statusCode == 200) {
