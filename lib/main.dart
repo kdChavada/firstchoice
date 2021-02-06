@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'UI/Login Screen.dart';
-import 'UI/userDetails.dart';
-import 'repository/senddata.dart';
+import 'UI/Dashbord.dart';
+import 'repository/globalvariable.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,17 +15,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool isLoggedIn = false;
+  bool isLoggedIn;
 
-
-
-  void getSharedPreferences()async{
+  void getSharedPreferences() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    isLoggedIn = preferences.getBool('isLoggedIn') ?? false;
     accessToken.value = preferences.getString('accessToken');
+    setState(() {
+      isLoggedIn = preferences.getBool('isLoggedIn') ?? false;
+    });
   }
-
-
 
   @override
   void initState() {
@@ -33,23 +31,23 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
+    print(isLoggedIn);
+    print(accessToken.value);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'First choice',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:isLoggedIn ? UserDetails() : Login(),
+      home: isLoggedIn == null
+          ? Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            )
+          : isLoggedIn
+              ? UserDetails()
+              : Login(),
     );
   }
 }
-
-
-
-
-

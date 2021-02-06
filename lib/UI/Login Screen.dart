@@ -1,6 +1,6 @@
 import 'package:alert/alert.dart';
 import 'package:cool_alert/cool_alert.dart';
-import 'package:firstchoice/UI/userDetails.dart';
+import 'package:firstchoice/UI/Dashbord.dart';
 import 'package:firstchoice/apiCall/auth.dart';
 import 'package:flutter/material.dart';
 

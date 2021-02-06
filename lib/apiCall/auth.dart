@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../repository/senddata.dart';
+import '../repository/globalvariable.dart';
 
 class Auth {
   SharedPreferences preferences;

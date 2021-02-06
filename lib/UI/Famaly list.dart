@@ -1,10 +1,7 @@
-import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
-import 'package:firstchoice/repository/familydata.dart';
-import 'package:firstchoice/repository/senddata.dart';
+import 'package:firstchoice/apiCall/familycalls.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+
+import '../constants.dart';
 
 class familyMember extends StatefulWidget {
   @override
@@ -12,85 +9,55 @@ class familyMember extends StatefulWidget {
 }
 
 class _familyMemberState extends State<familyMember> {
-  Future<Family> _familydata;
 
-  var datalength;
 
-  Future<Family>  getFamilyList() async {
-    http.Response response = await http.get(
-      "http://firstchoice.9brainz.store/api/v1/family",
-      headers: {
-        HttpHeaders.contentTypeHeader: "application/json",
-        HttpHeaders.authorizationHeader: "Bearer $accessToken"
-      },
-    );
-    if (response.statusCode == 200) {
-      print(response.statusCode);
-      var data = jsonDecode(response.body).toString();
 
-      log(data);
-
-      //datalength = data['user'].length;
-      //return   Family.formJson(data);
-    } else {
-      throw Exception('Failed to load data');
-    }
-  }
-
-  @override
-  void setState(fn) {
-    _familydata = getFamilyList();
-    super.setState(fn);
-  }
+  FamilyRepository _familyRepository = FamilyRepository();
 
   @override
   void initState() {
-    _familydata = getFamilyList();
+    _familyRepository.getFamilyList();
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text("family"),
+        centerTitle: true,
+        title: Text("Family View"),
       ),
-      body: ListView.builder(
-        itemCount: datalength == null ? 0 : datalength,
-        itemBuilder: (context, index) {
-          return Container(
-            child: Center(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Card(
-                  child: Container(
-                    child: FutureBuilder<Family>(
-                      future: _familydata,
-                      builder: (context, val) {
-                        if (val.hasData) {
-                          return Container(
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  Text("Name"),
-                                  Text("${val.data.motherName}"),
-                                ],
-                              ),
-                            ),
-                          );
-                        } else if (val.hasError) {
-                          return Text("${val.error}");
-                        }
-                        return CircularProgressIndicator();
-                      },
+      body: Container(
+        child: ValueListenableBuilder(
+            valueListenable: familyList  ,
+            builder: (context, v, c) {
+              return ListView.builder(
+                itemBuilder: (context, v) {
+                  return Card(
+                    color: Colors.blue,
+                    shadowColor: Colors.greenAccent,
+                    elevation: 5.0,
+                    child: Container(
+                      width: w,
+                      margin: EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            familyList.value[v].id.toString(),
+                            style: TextStyle(color: Colors.black),
+                          ),
+
+                        ],
+                      ),
                     ),
-                  ),
-                ),
-              ],
-            )),
-          );
-        },
+                  );
+                },
+                itemCount:familyList.value.length,
+              );
+            }),
       ),
     );
   }
