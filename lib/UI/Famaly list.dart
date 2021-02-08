@@ -32,10 +32,8 @@ class _familyMemberState extends State<familyMember> {
         title: Text("Family View"),
       ),
       body:  ListView.builder(
-
         itemBuilder: (context, v) {
           return Card(
-
             shadowColor: Colors.greenAccent,
             elevation: 5.0,
             child: Container(

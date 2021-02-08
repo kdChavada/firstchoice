@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:firstchoice/repository/FamilyModel.dart';
 import 'package:http/http.dart' as http;
-import '../constants.dart';
 import '../repository/globalvariable.dart';
-List  userfamily  ;
+
+List  userfamily;
+
+
 class FamilyRepository {
   Future<String> getFamily() async {
     try {
@@ -17,8 +18,6 @@ class FamilyRepository {
       );
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-
-
         userfamily = data;
 
       } else {

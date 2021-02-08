@@ -14,9 +14,9 @@ class EducationModel {
     id = data['id'] ?? 0;
     userId = data['user_id'] ?? 0;
     schoolName = data['school_name'] ?? "";
-    schoolPassingYear = data['school_passing_year'] ?? "";
+    schoolPassingYear = data['school_passing_year'].toString() ?? "";
     collegeName = data['college_name'] ?? "";
-    collegePassingYear = data['college_passing_year'] ?? "";
+    collegePassingYear = data['college_passing_year'].toString() ?? "";
     collegeLocation = data['college_location'] ?? "";
     qualification = data['qualification'] ?? "";
     createdAt = data['created_at'] ?? "";

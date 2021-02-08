@@ -1,37 +1,45 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:firstchoice/constants.dart';
 import 'package:firstchoice/repository/educationmodel.dart';
 import 'package:firstchoice/repository/globalvariable.dart';
 import 'package:http/http.dart' as http;
-import '../constants.dart';
+
+
+
 
 class EducationRepository {
+
+
+
+
+
   Future<void> getEducationList() async {
     try {
-      http.Response response =
-          await http.get("http://firstchoice.9brainz.store/api/v1/education",
+      http.Response response = await http.get(
+        "http://firstchoice.9brainz.store/api/v1/education",
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          HttpHeaders.authorizationHeader: "Bearer ${accessToken.value}"
+        },
+      );
+      if (response.statusCode == 200) {
 
-            headers: {
-
-              HttpHeaders.contentTypeHeader: "application/json",
-              HttpHeaders.authorizationHeader: "Bearer ${accessToken.value}"
-            },
-          );
-      if(response.statusCode == 200)
-        {
-          var data = jsonDecode(response.body);
-          for (Map i in data['user']) {
-            educationList.value.add(EducationModel.fromJson(i));
-          }
-          usersList.notifyListeners();
-
+        var data = jsonDecode(response.body);
+        print("1");
+        print(data['user']);
+        for (Map i in data['user']) {
+          print(i);
+          educationList.value.add(EducationModel.fromJson(i));
         }
-      else {
-        print("Un Able Load Data");
+        educationList.notifyListeners();
+        print(educationList.value);
+      } else {
+        throw Exception('Failed to load data');
       }
     } catch (e) {
-      print('Error 404 not Fount ');
       print(e);
     }
   }
+
 }
