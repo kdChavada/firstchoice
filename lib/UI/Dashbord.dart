@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:firstchoice/UI/educationlistpage.dart';
 import 'package:firstchoice/UI/userlistpage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -93,7 +94,13 @@ class _UserDetailsState extends State<UserDetails> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EducationListPage()));
+
+                  },
                   child: Card(
                     shadowColor: Colors.green,
                     elevation: 10.0,

@@ -1,21 +1,20 @@
+import 'dart:ui';
+
 import 'package:alert/alert.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:firstchoice/UI/Dashbord.dart';
 import 'package:firstchoice/apiCall/auth.dart';
 import 'package:flutter/material.dart';
 
-
-
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
 
-
 class _LoginState extends State<Login> {
-
-  final Mobile  = TextEditingController();
+  final Mobile = TextEditingController();
   final Otp = TextEditingController();
+
   Auth auth = Auth();
 
   @override
@@ -24,9 +23,6 @@ class _LoginState extends State<Login> {
     Otp.dispose();
     super.dispose();
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +38,15 @@ class _LoginState extends State<Login> {
         child: Column(
           children: [
             Container(
-              child: Center(
-                child: CircleAvatar(
-                  backgroundColor: Colors.red,
-                  minRadius: 50.0,
-                ),
+              child: Text(
+                "Login",
+                style: TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.purple),
               ),
             ),
+            SizedBox(height: 30.0,),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
               child: TextField(
@@ -71,11 +69,11 @@ class _LoginState extends State<Login> {
                 keyboardType: TextInputType.number,
               ),
             ),
+            SizedBox(height: 30.0,),
             GestureDetector(
-
-              onTap: () async{
+              onTap: () async {
                 bool isauthorised = await auth.login(Mobile.text, Otp.text);
-                if(isauthorised){
+                if (isauthorised) {
                   CoolAlert.show(
                     context: context,
                     type: CoolAlertType.success,
@@ -85,17 +83,15 @@ class _LoginState extends State<Login> {
                     context,
                     MaterialPageRoute(builder: (context) => UserDetails()),
                   );
-                }
-                else{
+                } else {
                   Alert(message: "Faild").show();
                 }
               },
-
               child: Container(
-                height: h * 0.1,
-                width: w * 0.8,
+                height: h * 0.09,
+                width: w * 0.6,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(20.0),
                   color: Colors.blue,
                 ),
                 child: Center(

@@ -16,7 +16,8 @@ class _familyMemberState extends State<familyMember> {
 
   @override
   void initState() {
-    _familyRepository.getFamilyList();
+
+    _familyRepository.getFamily();
 
     super.initState();
   }
@@ -30,34 +31,36 @@ class _familyMemberState extends State<familyMember> {
         centerTitle: true,
         title: Text("Family View"),
       ),
-      body: Container(
-        child: ValueListenableBuilder(
-            valueListenable: familyList  ,
-            builder: (context, v, c) {
-              return ListView.builder(
-                itemBuilder: (context, v) {
-                  return Card(
-                    color: Colors.blue,
-                    shadowColor: Colors.greenAccent,
-                    elevation: 5.0,
-                    child: Container(
-                      width: w,
-                      margin: EdgeInsets.all(10.0),
-                      child: Column(
-                        children: [
-                          Text(
-                            familyList.value[v].id.toString(),
-                            style: TextStyle(color: Colors.black),
-                          ),
+      body:  ListView.builder(
 
-                        ],
-                      ),
-                    ),
-                  );
-                },
-                itemCount:familyList.value.length,
-              );
-            }),
+        itemBuilder: (context, v) {
+          return Card(
+
+            shadowColor: Colors.greenAccent,
+            elevation: 5.0,
+            child: Container(
+              width: w,
+              margin: EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  Text(
+                   "${userfamily[v]['id']}",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  Text(
+                    "${userfamily[v]['user_id']}",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  Text(
+                    "${userfamily[v]['religion']}",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+        itemCount:userfamily.length,
       ),
     );
   }

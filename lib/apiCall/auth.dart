@@ -24,7 +24,6 @@ class Auth {
       );
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-
         bool isLoginSucess = data['isAuthorized'];
         if (isLoginSucess == true) {
           accessToken.value = data['access_token'];
